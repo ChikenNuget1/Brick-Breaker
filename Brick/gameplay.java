@@ -33,6 +33,8 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
     private int ballXDir = n;
     private int ballYDir = -2;
 
+    int won = 0;
+
     private mapGenerator map;
 
     public gameplay(){
@@ -74,6 +76,7 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
         // Check if all bricks are broken
         if(totalBricks <= 0){
             play = false;
+            won = 1;
             ballXDir = 0;
             ballYDir = 0;
             g.setColor(Color.RED);
@@ -89,6 +92,7 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
             play = false;
             ballXDir = 0;
             ballYDir = 0;
+            won = 0;
             g.setColor(Color.RED);
             g.setFont(new Font("serif", Font.BOLD, 30));
             g.drawString("Game Over, Score: " + score, 190, 300);
@@ -194,7 +198,10 @@ public class gameplay extends JPanel implements KeyListener, ActionListener {
                 int p = (random.nextInt(6)+ 1) * -1;
                 ballYDir = p;
                 playerX = 310;
-                score = 0;
+                if(won != 1){
+                    score = 0;
+                    won = 0;
+                }
                 totalBricks = 21;
                 map = new mapGenerator(3, 7);
 
